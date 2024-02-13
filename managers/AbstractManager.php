@@ -1,17 +1,22 @@
 <?php
+require_once 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable('config');
+$dotenv->load();
+
 abstract class AbstractManager
 {
     protected PDO $db;
 
     public function __construct()
     {
-        $host = "db.3wa.io";
-        $port = "3306";
-        $dbname = "antoinecormier_distorsion";
+        $host = $_ENV['DB_HOST'];
+        $port = $_ENV['DB_PORT'];
+        $dbname = $_ENV['DB_NAME'];
         $connexionString = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8";
 
-        $user = "antoinecormier";
-        $password = "52ca4b4148c7bf06f35e89032a52940f";
+        $user = $_ENV['DB_USER'];
+        $password = $_ENV['DB_PASS'];
 
         $this->db = new PDO(
             $connexionString,
